@@ -1,66 +1,66 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ليكِ يا ياسمين</title>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600&display=swap" rel="stylesheet">
+<title>For Yasmeen</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  :root {
-    --rose: #c9184a;
-    --rose-light: #ff4d6d;
-    --rose-pale: #fff0f3;
-    --rose-mid: #ffb3c1;
-    --gold: #d4a853;
-    --dark: #1a0a0f;
-    --petal: #ffe0e9;
-  }
-
   body {
     min-height: 100vh;
-    background: var(--dark);
-    font-family: 'Cairo', sans-serif;
-    overflow: hidden;
+    background: #0d0d0f;
+    font-family: 'DM Sans', sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
+    overflow: hidden;
+    cursor: default;
   }
 
-  /* Starfield */
-  .stars {
+  /* Subtle grain overlay */
+  body::before {
+    content: '';
     position: fixed;
     inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.35;
     pointer-events: none;
     z-index: 0;
   }
-  .star {
-    position: absolute;
-    background: #fff;
+
+  /* Ambient glow */
+  .glow {
+    position: fixed;
     border-radius: 50%;
-    animation: twinkle var(--d) ease-in-out infinite alternate;
+    filter: blur(90px);
+    pointer-events: none;
+    z-index: 0;
   }
-  @keyframes twinkle {
-    from { opacity: 0.1; transform: scale(0.8); }
-    to   { opacity: 0.9; transform: scale(1.2); }
+  .glow-a {
+    width: 500px; height: 500px;
+    background: rgba(180, 140, 100, 0.07);
+    top: -100px; left: -100px;
+  }
+  .glow-b {
+    width: 400px; height: 400px;
+    background: rgba(150, 120, 180, 0.05);
+    bottom: -80px; right: -80px;
   }
 
-  /* Floating petals */
-  .petal {
+  /* Floating dots */
+  .dot {
     position: fixed;
-    width: 10px; height: 14px;
-    background: var(--rose-mid);
-    border-radius: 50% 0 50% 0;
-    opacity: 0;
+    border-radius: 50%;
+    background: rgba(212, 168, 83, 0.25);
     pointer-events: none;
-    animation: fall var(--fd) linear var(--fd2) infinite;
-    z-index: 1;
+    z-index: 0;
+    animation: floatDot var(--t) ease-in-out infinite alternate;
   }
-  @keyframes fall {
-    0%   { transform: translateY(-20px) rotate(0deg); opacity: 0.7; }
-    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+  @keyframes floatDot {
+    from { transform: translateY(0px) translateX(0px); }
+    to   { transform: translateY(var(--ty)) translateX(var(--tx)); }
   }
 
   /* Screens */
@@ -70,290 +70,295 @@
     display: none;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     text-align: center;
-    padding: 40px 30px;
-    max-width: 520px;
-    width: 90%;
-    animation: fadeIn 1.2s ease forwards;
+    max-width: 460px;
+    width: 92%;
+    padding: 20px;
   }
-  .screen.active { display: flex; }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(30px); }
+  .screen.active {
+    display: flex;
+    animation: appear 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes appear {
+    from { opacity: 0; transform: translateY(24px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* Card */
-  .card {
-    background: rgba(255,240,243,0.04);
-    border: 1px solid rgba(201,24,74,0.3);
-    border-radius: 24px;
-    padding: 50px 40px;
-    backdrop-filter: blur(12px);
-    position: relative;
-    overflow: hidden;
-  }
-  .card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at 50% 0%, rgba(201,24,74,0.15) 0%, transparent 70%);
-    pointer-events: none;
+  /* Eyebrow */
+  .eyebrow {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(212, 168, 83, 0.6);
+    margin-bottom: 28px;
   }
 
-  /* Decorative corners */
-  .corner {
-    position: absolute;
-    width: 40px; height: 40px;
-    border-color: var(--gold);
-    border-style: solid;
-    opacity: 0.5;
-  }
-  .corner.tl { top: 12px; left: 12px; border-width: 1px 0 0 1px; }
-  .corner.tr { top: 12px; right: 12px; border-width: 1px 1px 0 0; }
-  .corner.bl { bottom: 12px; left: 12px; border-width: 0 0 1px 1px; }
-  .corner.br { bottom: 12px; right: 12px; border-width: 0 1px 1px 0; }
-
-  .big-heart {
-    font-size: 56px;
-    animation: heartbeat 1.4s ease-in-out infinite;
-    display: block;
-    margin-bottom: 20px;
-  }
-  @keyframes heartbeat {
-    0%,100% { transform: scale(1); }
-    14%      { transform: scale(1.18); }
-    28%      { transform: scale(1); }
-    42%      { transform: scale(1.1); }
-    70%      { transform: scale(1); }
-  }
-
+  /* Headline */
   h1 {
-    font-family: 'Amiri', serif;
-    font-size: 2rem;
-    color: var(--rose-light);
-    line-height: 1.5;
-    margin-bottom: 10px;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2.4rem, 8vw, 3.2rem);
+    line-height: 1.15;
+    color: #f5f0e8;
+    margin-bottom: 18px;
+    letter-spacing: -0.02em;
   }
-  .sub {
-    font-size: 0.95rem;
-    color: var(--rose-mid);
-    opacity: 0.75;
-    margin-bottom: 32px;
-    letter-spacing: 1px;
+  h1 em {
+    font-style: italic;
+    color: #d4a853;
   }
 
-  /* Button */
+  /* Body text */
+  .body-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 1.9;
+    color: rgba(245, 240, 232, 0.65);
+    margin-bottom: 44px;
+    max-width: 360px;
+  }
+  .body-text strong {
+    font-weight: 400;
+    color: rgba(245, 240, 232, 0.9);
+  }
+
+  /* Divider line */
+  .line {
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(to bottom, transparent, rgba(212,168,83,0.4), transparent);
+    margin: 0 auto 40px;
+  }
+
+  /* Button — pill with arrow */
   .btn {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    background: linear-gradient(135deg, var(--rose) 0%, #a4133c 100%);
-    color: #fff;
-    border: none;
-    border-radius: 50px;
-    padding: 14px 36px;
-    font-family: 'Cairo', sans-serif;
-    font-size: 1rem;
-    font-weight: 600;
+    gap: 14px;
+    border: 1px solid rgba(212, 168, 83, 0.3);
+    background: transparent;
+    color: rgba(245, 240, 232, 0.8);
+    border-radius: 100px;
+    padding: 13px 28px 13px 36px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-transform: uppercase;
     cursor: pointer;
-    letter-spacing: 0.5px;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
     overflow: hidden;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 6px 30px rgba(201,24,74,0.4);
   }
-  .btn::after {
+  .btn::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(255,255,255,0.12);
+    background: rgba(212, 168, 83, 0.07);
     opacity: 0;
-    transition: opacity 0.2s;
+    transition: opacity 0.3s;
   }
-  .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 40px rgba(201,24,74,0.55); }
-  .btn:hover::after { opacity: 1; }
+  .btn:hover {
+    border-color: rgba(212, 168, 83, 0.7);
+    color: #d4a853;
+    transform: translateY(-2px);
+  }
+  .btn:hover::before { opacity: 1; }
   .btn:active { transform: translateY(0); }
 
-  /* Message text */
-  .msg {
-    font-family: 'Amiri', serif;
-    font-size: 1.25rem;
-    color: #ffe8ee;
-    line-height: 2;
-    margin-bottom: 28px;
-  }
-  .msg span {
-    color: var(--rose-light);
-    font-weight: 700;
-  }
-
-  .divider {
-    width: 60px; height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    margin: 20px auto;
-  }
-
-  .hearts-row {
-    font-size: 1.4rem;
-    letter-spacing: 8px;
-    margin-bottom: 24px;
-  }
-
-  /* Final screen seal */
-  .seal {
-    width: 80px; height: 80px;
-    border: 2px solid var(--gold);
+  /* Arrow inside button */
+  .btn-arrow {
+    width: 24px; height: 24px;
     border-radius: 50%;
+    border: 1px solid currentColor;
     display: flex; align-items: center; justify-content: center;
-    font-size: 2rem;
-    margin: 0 auto 20px;
-    animation: rotateSeal 8s linear infinite;
-    opacity: 0.85;
+    flex-shrink: 0;
+    transition: transform 0.3s;
   }
-  @keyframes rotateSeal {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
-  }
+  .btn:hover .btn-arrow { transform: translateX(3px); }
+  .btn-arrow svg { width: 10px; height: 10px; fill: none; stroke: currentColor; stroke-width: 1.5; }
 
-  /* Burst hearts on click */
-  .burst-heart {
+  /* Counter */
+  .step-counter {
     position: fixed;
-    font-size: 1.5rem;
-    pointer-events: none;
-    z-index: 999;
-    animation: burstUp 1s ease forwards;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 20;
   }
-  @keyframes burstUp {
-    0%   { opacity: 1; transform: translateY(0) scale(1); }
-    100% { opacity: 0; transform: translateY(-120px) scale(0.5); }
+  .dot-nav {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: rgba(212, 168, 83, 0.2);
+    transition: all 0.4s;
+  }
+  .dot-nav.active {
+    background: rgba(212, 168, 83, 0.7);
+    transform: scale(1.3);
   }
 
+  /* Ripple */
+  .ripple {
+    position: fixed;
+    border-radius: 50%;
+    border: 1px solid rgba(212, 168, 83, 0.3);
+    pointer-events: none;
+    z-index: 5;
+    animation: rippleOut 0.8s ease forwards;
+  }
+  @keyframes rippleOut {
+    from { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+    to   { transform: translate(-50%, -50%) scale(4); opacity: 0; }
+  }
+
+  /* Final screen special */
+  .final-word {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 0.85rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(212, 168, 83, 0.5);
+    margin-top: 40px;
+  }
+
+  /* Signature dash */
+  .sig {
+    margin-top: 36px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: rgba(245, 240, 232, 0.25);
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .sig-line { flex: 1; height: 1px; background: currentColor; }
 </style>
 </head>
 <body>
 
-<!-- Stars -->
-<div class="stars" id="stars"></div>
+<div class="glow glow-a"></div>
+<div class="glow glow-b"></div>
 
-<!-- Petals -->
-<div id="petals"></div>
+<div id="dots-bg"></div>
 
-<!-- SCREEN 1: Intro -->
+<!-- Screen 1 -->
 <div class="screen active" id="s1">
-  <div class="card">
-    <div class="corner tl"></div><div class="corner tr"></div>
-    <div class="corner bl"></div><div class="corner br"></div>
-    <span class="big-heart">💌</span>
-    <h1>اضغطي هنا يا قمر</h1>
-    <p class="sub">في حاجة عايزك تعرفيها ✨</p>
-    <button class="btn" onclick="goTo('s2'); burst(event)">
-      ❤️ &nbsp; اضغطي هنا
-    </button>
-  </div>
+  <p class="eyebrow">A message for you</p>
+  <h1>Tap here,<br><em>Yasmeen</em></h1>
+  <p class="body-text">There's something I've been meaning to say —<br>something that matters.</p>
+  <button class="btn" onclick="next(event, 's2')">
+    Open it
+    <span class="btn-arrow">
+      <svg viewBox="0 0 10 10"><polyline points="2,2 8,5 2,8"/></svg>
+    </span>
+  </button>
 </div>
 
-<!-- SCREEN 2: First message -->
+<!-- Screen 2 -->
 <div class="screen" id="s2">
-  <div class="card">
-    <div class="corner tl"></div><div class="corner tr"></div>
-    <div class="corner bl"></div><div class="corner br"></div>
-    <span class="big-heart">❤️</span>
-    <p class="msg">
-      أوعي تزعلي مني يا ياسمين<br>
-      <span>انتِ عارفة إنك غالية</span><br>
-      وأغلى حد في حياتي 🌹
-    </p>
-    <div class="divider"></div>
-    <button class="btn" onclick="goTo('s3'); burst(event)">
-      التالي &nbsp; 💫
-    </button>
-  </div>
+  <p class="eyebrow">To know</p>
+  <h1>Don't ever<br>be <em>upset</em> with me</h1>
+  <div class="line"></div>
+  <p class="body-text">
+    You already know<br>
+    <strong>you are the most precious person in my life.</strong><br>
+    No one comes close.
+  </p>
+  <button class="btn" onclick="next(event, 's3')">
+    Continue
+    <span class="btn-arrow">
+      <svg viewBox="0 0 10 10"><polyline points="2,2 8,5 2,8"/></svg>
+    </span>
+  </button>
 </div>
 
-<!-- SCREEN 3: Promise -->
+<!-- Screen 3 -->
 <div class="screen" id="s3">
-  <div class="card">
-    <div class="corner tl"></div><div class="corner tr"></div>
-    <div class="corner bl"></div><div class="corner br"></div>
-    <div class="seal">🤍</div>
-    <p class="msg">
-      <span>وعد مني</span><br>
-      أنا ما هنساكِ<br>
-      وإنك هتفضلي جنبي دايماً 🕊️
-    </p>
-    <div class="divider"></div>
-    <button class="btn" onclick="goTo('s4'); burst(event)">
-      التالي &nbsp; 🌸
-    </button>
+  <p class="eyebrow">A promise</p>
+  <h1>I will never<br><em>forget</em> you</h1>
+  <div class="line"></div>
+  <p class="body-text">
+    You have always been by my side —<br>
+    and I promise,<br>
+    <strong>that will never change.</strong>
+  </p>
+  <button class="btn" onclick="next(event, 's4')">
+    One more thing
+    <span class="btn-arrow">
+      <svg viewBox="0 0 10 10"><polyline points="2,2 8,5 2,8"/></svg>
+    </span>
+  </button>
+</div>
+
+<!-- Screen 4 -->
+<div class="screen" id="s4">
+  <p class="eyebrow">Forever</p>
+  <h1>I swear —<br>on any day<br>we <em>have together</em></h1>
+  <div class="line"></div>
+  <p class="body-text">
+    I will never let you go without.<br>
+    <strong>Not a single thing.</strong>
+  </p>
+  <p class="final-word">Always yours</p>
+  <div class="sig">
+    <span class="sig-line"></span>
+    <span>Rami</span>
+    <span class="sig-line"></span>
   </div>
 </div>
 
-<!-- SCREEN 4: Final -->
-<div class="screen" id="s4">
-  <div class="card">
-    <div class="corner tl"></div><div class="corner tr"></div>
-    <div class="corner bl"></div><div class="corner br"></div>
-    <span class="big-heart">💍</span>
-    <h1>والله</h1>
-    <p class="msg">
-      اليوم اللي هيبقى معايا<br>
-      <span>ما هحرمكِ من حاجة</span><br>
-      أبداً يا ياسمين 💕
-    </p>
-    <div class="divider"></div>
-    <div class="hearts-row">❤️ 💗 💖 💗 ❤️</div>
-    <p style="color: var(--gold); font-family: 'Amiri',serif; font-size:1rem; opacity:0.8;">~ بحبك ~ 🌹</p>
-  </div>
+<!-- Nav dots -->
+<div class="step-counter">
+  <div class="dot-nav active" id="nav0"></div>
+  <div class="dot-nav" id="nav1"></div>
+  <div class="dot-nav" id="nav2"></div>
+  <div class="dot-nav" id="nav3"></div>
 </div>
 
 <script>
-// Stars
-const starsEl = document.getElementById('stars');
-for (let i = 0; i < 120; i++) {
-  const s = document.createElement('div');
-  s.className = 'star';
-  const size = Math.random() * 2.5 + 0.5;
-  s.style.cssText = `width:${size}px;height:${size}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--d:${(Math.random()*3+1.5).toFixed(1)}s;animation-delay:${(Math.random()*3).toFixed(1)}s`;
-  starsEl.appendChild(s);
+// Floating dots
+const bg = document.getElementById('dots-bg');
+for (let i = 0; i < 12; i++) {
+  const d = document.createElement('div');
+  d.className = 'dot';
+  const size = Math.random() * 3 + 1.5;
+  const ty = (Math.random() * 20 - 10).toFixed(0) + 'px';
+  const tx = (Math.random() * 16 - 8).toFixed(0) + 'px';
+  d.style.cssText = `width:${size}px;height:${size}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--t:${(Math.random()*5+4).toFixed(1)}s;--ty:${ty};--tx:${tx};animation-delay:${(Math.random()*4).toFixed(1)}s`;
+  bg.appendChild(d);
 }
 
-// Petals
-const petalsEl = document.getElementById('petals');
-for (let i = 0; i < 18; i++) {
-  const p = document.createElement('div');
-  p.className = 'petal';
-  p.style.cssText = `left:${Math.random()*100}%;--fd:${(Math.random()*8+6).toFixed(1)}s;--fd2:${(Math.random()*6).toFixed(1)}s`;
-  petalsEl.appendChild(p);
-}
+let current = 0;
+const screens = ['s1','s2','s3','s4'];
 
-// Navigation
-function goTo(id) {
-  document.querySelectorAll('.screen').forEach(s => {
-    s.classList.remove('active');
-    s.style.display = 'none';
-  });
+function next(e, id) {
+  // Ripple
+  const r = document.createElement('div');
+  r.className = 'ripple';
+  r.style.left = e.clientX + 'px';
+  r.style.top = e.clientY + 'px';
+  r.style.width = r.style.height = '80px';
+  document.body.appendChild(r);
+  setTimeout(() => r.remove(), 900);
+
+  // Switch screen
+  document.getElementById(screens[current]).classList.remove('active');
+  document.getElementById(screens[current]).style.display = 'none';
+  current = screens.indexOf(id);
   const el = document.getElementById(id);
   el.style.display = 'flex';
-  // force reflow for animation
   void el.offsetWidth;
   el.classList.add('active');
-}
 
-// Burst hearts on click
-function burst(e) {
-  const emojis = ['❤️','💗','💖','🌸','✨','💕'];
-  for (let i = 0; i < 8; i++) {
-    const h = document.createElement('div');
-    h.className = 'burst-heart';
-    h.textContent = emojis[Math.floor(Math.random()*emojis.length)];
-    h.style.left = (e.clientX + (Math.random()-0.5)*80) + 'px';
-    h.style.top  = (e.clientY + (Math.random()-0.5)*40) + 'px';
-    h.style.animationDelay = (Math.random()*0.3) + 's';
-    document.body.appendChild(h);
-    setTimeout(() => h.remove(), 1200);
-  }
+  // Nav dots
+  document.querySelectorAll('.dot-nav').forEach((d,i) => {
+    d.classList.toggle('active', i === current);
+  });
 }
 </script>
 </body>
