@@ -1,364 +1,136 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Yassmin</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+<title>Exceed Employees</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;background:#f8f6ff;font-family:'Tajawal',sans-serif;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.screen{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px 24px;animation:fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) forwards}
+.screen.active{display:flex}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.eyebrow{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#9c7fc0;margin-bottom:20px;font-weight:400}
+h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2rem,7vw,2.8rem);line-height:1.2;color:#2d1b69;margin-bottom:16px}
+h1 em{font-style:italic;color:#7c3aed}
+.subtitle{font-size:1rem;color:#6b7280;line-height:1.8;margin-bottom:36px;max-width:340px}
+.subtitle strong{color:#2d1b69;font-weight:500}
 
-  body {
-    min-height: 100vh;
-    background: #0d0d0f;
-    font-family: 'DM Sans', sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    cursor: default;
-  }
+.names-grid{display:flex;flex-direction:column;gap:12px;width:100%;max-width:300px;margin-bottom:36px}
+.name-card{border:1.5px solid #e0d7f8;background:#fff;border-radius:16px;padding:14px 20px;cursor:pointer;font-size:1.1rem;font-weight:500;color:#4c1d95;transition:all 0.25s ease;display:flex;align-items:center;gap:12px}
+.name-card:hover{border-color:#7c3aed;background:#f5f0ff;transform:translateY(-2px);box-shadow:0 4px 20px rgba(124,58,237,0.12)}
+.name-card.selected{border-color:#7c3aed;background:#ede9fe;box-shadow:0 4px 20px rgba(124,58,237,0.18)}
+.name-card .check{width:22px;height:22px;border-radius:50%;border:1.5px solid #c4b5fd;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.2s;font-size:12px}
+.name-card.selected .check{background:#7c3aed;border-color:#7c3aed;color:#fff}
 
-  /* Subtle grain overlay */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    opacity: 0.35;
-    pointer-events: none;
-    z-index: 0;
-  }
+.btn{display:inline-flex;align-items:center;gap:10px;background:#7c3aed;color:#fff;border:none;border-radius:100px;padding:13px 32px;font-family:'Tajawal',sans-serif;font-size:0.95rem;font-weight:500;cursor:pointer;transition:all 0.3s;opacity:0.4;pointer-events:none}
+.btn.ready{opacity:1;pointer-events:all}
+.btn.ready:hover{background:#6d28d9;transform:translateY(-2px)}
+.btn-arrow{width:22px;height:22px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.6);display:flex;align-items:center;justify-content:center}
+.btn-arrow svg{width:9px;height:9px;fill:none;stroke:#fff;stroke-width:1.5}
 
-  /* Ambient glow */
-  .glow {
-    position: fixed;
-    border-radius: 50%;
-    filter: blur(90px);
-    pointer-events: none;
-    z-index: 0;
-  }
-  .glow-a {
-    width: 500px; height: 500px;
-    background: rgba(180, 140, 100, 0.07);
-    top: -100px; left: -100px;
-  }
-  .glow-b {
-    width: 400px; height: 400px;
-    background: rgba(150, 120, 180, 0.05);
-    bottom: -80px; right: -80px;
-  }
+.confetti-dot{position:fixed;border-radius:50%;pointer-events:none;z-index:100;animation:fall var(--t) ease forwards}
+@keyframes fall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
 
-  /* Floating dots */
-  .dot {
-    position: fixed;
-    border-radius: 50%;
-    background: rgba(212, 168, 83, 0.25);
-    pointer-events: none;
-    z-index: 0;
-    animation: floatDot var(--t) ease-in-out infinite alternate;
-  }
-  @keyframes floatDot {
-    from { transform: translateY(0px) translateX(0px); }
-    to   { transform: translateY(var(--ty)) translateX(var(--tx)); }
-  }
+.heart{font-size:2.5rem;margin-bottom:16px;animation:pulse 1.5s ease infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.final-name{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;font-style:italic;color:#7c3aed;margin-bottom:8px}
+.message-box{background:#fff;border:1.5px solid #e0d7f8;border-radius:20px;padding:24px 28px;max-width:340px;margin:20px auto 32px}
+.message-box p{font-size:1.05rem;line-height:1.9;color:#4c1d95}
+.message-box strong{color:#7c3aed}
+.sig{margin-top:24px;color:#9c7fc0;font-size:0.8rem;letter-spacing:2px;text-transform:uppercase}
 
-  /* Screens */
-  .screen {
-    position: relative;
-    z-index: 10;
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    max-width: 460px;
-    width: 92%;
-    padding: 20px;
-  }
-  .screen.active {
-    display: flex;
-    animation: appear 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-  @keyframes appear {
-    from { opacity: 0; transform: translateY(24px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+.nav-dots{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:50}
+.dot-nav{width:5px;height:5px;border-radius:50%;background:rgba(124,58,237,0.2);transition:all 0.3s}
+.dot-nav.active{background:#7c3aed;transform:scale(1.4)}
 
-  /* Eyebrow */
-  .eyebrow {
-    font-size: 10px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: rgba(212, 168, 83, 0.6);
-    margin-bottom: 28px;
-  }
-
-  /* Headline */
-  h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: clamp(2.4rem, 8vw, 3.2rem);
-    line-height: 1.15;
-    color: #f5f0e8;
-    margin-bottom: 18px;
-    letter-spacing: -0.02em;
-  }
-  h1 em {
-    font-style: italic;
-    color: #d4a853;
-  }
-
-  /* Body text */
-  .body-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: 1.2rem;
-    line-height: 1.9;
-    color: rgba(245, 240, 232, 0.65);
-    margin-bottom: 44px;
-    max-width: 360px;
-  }
-  .body-text strong {
-    font-weight: 400;
-    color: rgba(245, 240, 232, 0.9);
-  }
-
-  /* Divider line */
-  .line {
-    width: 1px;
-    height: 48px;
-    background: linear-gradient(to bottom, transparent, rgba(212,168,83,0.4), transparent);
-    margin: 0 auto 40px;
-  }
-
-  /* Button — pill with arrow */
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 14px;
-    border: 1px solid rgba(212, 168, 83, 0.3);
-    background: transparent;
-    color: rgba(245, 240, 232, 0.8);
-    border-radius: 100px;
-    padding: 13px 28px 13px 36px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.8rem;
-    font-weight: 300;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-    position: relative;
-    overflow: hidden;
-  }
-  .btn::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(212, 168, 83, 0.07);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  .btn:hover {
-    border-color: rgba(212, 168, 83, 0.7);
-    color: #d4a853;
-    transform: translateY(-2px);
-  }
-  .btn:hover::before { opacity: 1; }
-  .btn:active { transform: translateY(0); }
-
-  /* Arrow inside button */
-  .btn-arrow {
-    width: 24px; height: 24px;
-    border-radius: 50%;
-    border: 1px solid currentColor;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-    transition: transform 0.3s;
-  }
-  .btn:hover .btn-arrow { transform: translateX(3px); }
-  .btn-arrow svg { width: 10px; height: 10px; fill: none; stroke: currentColor; stroke-width: 1.5; }
-
-  /* Counter */
-  .step-counter {
-    position: fixed;
-    bottom: 32px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 8px;
-    z-index: 20;
-  }
-  .dot-nav {
-    width: 5px; height: 5px;
-    border-radius: 50%;
-    background: rgba(212, 168, 83, 0.2);
-    transition: all 0.4s;
-  }
-  .dot-nav.active {
-    background: rgba(212, 168, 83, 0.7);
-    transform: scale(1.3);
-  }
-
-  /* Ripple */
-  .ripple {
-    position: fixed;
-    border-radius: 50%;
-    border: 1px solid rgba(212, 168, 83, 0.3);
-    pointer-events: none;
-    z-index: 5;
-    animation: rippleOut 0.8s ease forwards;
-  }
-  @keyframes rippleOut {
-    from { transform: translate(-50%, -50%) scale(0); opacity: 1; }
-    to   { transform: translate(-50%, -50%) scale(4); opacity: 0; }
-  }
-
-  /* Final screen special */
-  .final-word {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: 0.85rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: rgba(212, 168, 83, 0.5);
-    margin-top: 40px;
-  }
-
-  /* Signature dash */
-  .sig {
-    margin-top: 36px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    color: rgba(245, 240, 232, 0.25);
-    font-size: 0.75rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  }
-  .sig-line { flex: 1; height: 1px; background: currentColor; }
+.bg-circle{position:fixed;border-radius:50%;pointer-events:none;z-index:0}
+.bg-a{width:500px;height:500px;background:rgba(167,139,250,0.08);top:-150px;left:-100px}
+.bg-b{width:400px;height:400px;background:rgba(196,181,253,0.06);bottom:-100px;right:-80px}
 </style>
 </head>
 <body>
 
-<div class="glow glow-a"></div>
-<div class="glow glow-b"></div>
+<div class="bg-circle bg-a"></div>
+<div class="bg-circle bg-b"></div>
 
-<div id="dots-bg"></div>
-
-<!-- Screen 1 -->
 <div class="screen active" id="s1">
-  <p class="eyebrow">A message for you</p>
-  <h1>Tap here,<br><em>Yassmin</em></h1>
-  <p class="body-text">There's something I've been meaning to say —<br>something that matters.</p>
-  <button class="btn" onclick="next(event, 's2')">
-    Open it
-    <span class="btn-arrow">
-      <svg viewBox="0 0 10 10"><polyline points="2,2 8,5 2,8"/></svg>
-    </span>
-  </button>
-</div>
-
-<!-- Screen 2 -->
-<div class="screen" id="s2">
-  <p class="eyebrow">To know</p>
-  <h1>Don't ever<br>be <em>upset</em> with me</h1>
-  <div class="line"></div>
-  <p class="body-text">
-    You already know<br>
-    <strong>you are the most precious person in my life.</strong><br>
-    No one comes close.
-  </p>
-  <button class="btn" onclick="next(event, 's3')">
-    Continue
-    <span class="btn-arrow">
-      <svg viewBox="0 0 10 10"><polyline points="2,2 8,5 2,8"/></svg>
-    </span>
-  </button>
-</div>
-
-<!-- Screen 3 -->
-<div class="screen" id="s3">
-  <p class="eyebrow">A promise</p>
-  <h1>I will never<br><em>forget</em> you</h1>
-  <div class="line"></div>
-  <p class="body-text">
-    You have always been by my side —<br>
-    and I promise,<br>
-    <strong>that will never change.</strong>
-  </p>
-  <button class="btn" onclick="next(event, 's4')">
-    One more thing
-    <span class="btn-arrow">
-      <svg viewBox="0 0 10 10"><polyline points="2,2 8,5 2,8"/></svg>
-    </span>
-  </button>
-</div>
-
-<!-- Screen 4 -->
-<div class="screen" id="s4">
-  <p class="eyebrow">Forever</p>
-  <h1>I swear —<br>on any day<br>we <em>have together</em></h1>
-  <div class="line"></div>
-  <p class="body-text">
-    I will never let you go without.<br>
-    <strong>Not a single thing.</strong>
-  </p>
-  <p class="final-word">Always yours</p>
-  <div class="sig">
-    <span class="sig-line"></span>
-    <span>Rami</span>
-    <span class="sig-line"></span>
+  <p class="eyebrow">Exceed Employees</p>
+  <h1>فيه حاجة<br>عايزين نقولهالك <em>يا</em></h1>
+  <p class="subtitle">اختار اسمك الأول</p>
+  <div class="names-grid">
+    <div class="name-card" onclick="selectName(this,'عبدالله')">
+      <span class="check">✓</span> عبدالله
+    </div>
+    <div class="name-card" onclick="selectName(this,'أنس')">
+      <span class="check">✓</span> أنس
+    </div>
+    <div class="name-card" onclick="selectName(this,'وليد')">
+      <span class="check">✓</span> وليد
+    </div>
   </div>
+  <button class="btn" id="continueBtn" onclick="goTo('s2')">
+    كمّل
+    <span class="btn-arrow"><svg viewBox="0 0 10 10"><polyline points="8,2 2,5 8,8"/></svg></span>
+  </button>
 </div>
 
-<!-- Nav dots -->
-<div class="step-counter">
+<div class="screen" id="s2">
+  <p class="eyebrow">رسالة خاصة</p>
+  <div class="heart">💜</div>
+  <div class="final-name" id="displayName"></div>
+  <div class="message-box">
+    <p>
+      حبيبي، حبينا نقولك إنك<br>
+      <strong>شاطر جداً في شغلك</strong><br>
+      وإننا فخورين بيك ومقدّرين كل مجهودك.<br><br>
+      فضلك معانا وده بيفرق.
+    </p>
+  </div>
+  <p class="sig">— فريق Exceed</p>
+</div>
+
+<div class="nav-dots">
   <div class="dot-nav active" id="nav0"></div>
   <div class="dot-nav" id="nav1"></div>
-  <div class="dot-nav" id="nav2"></div>
-  <div class="dot-nav" id="nav3"></div>
 </div>
 
 <script>
-// Floating dots
-const bg = document.getElementById('dots-bg');
-for (let i = 0; i < 12; i++) {
-  const d = document.createElement('div');
-  d.className = 'dot';
-  const size = Math.random() * 3 + 1.5;
-  const ty = (Math.random() * 20 - 10).toFixed(0) + 'px';
-  const tx = (Math.random() * 16 - 8).toFixed(0) + 'px';
-  d.style.cssText = `width:${size}px;height:${size}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--t:${(Math.random()*5+4).toFixed(1)}s;--ty:${ty};--tx:${tx};animation-delay:${(Math.random()*4).toFixed(1)}s`;
-  bg.appendChild(d);
+let chosen = '';
+const screens = ['s1','s2'];
+let current = 0;
+
+function selectName(el, name){
+  document.querySelectorAll('.name-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  chosen = name;
+  document.getElementById('continueBtn').classList.add('ready');
 }
 
-let current = 0;
-const screens = ['s1','s2','s3','s4'];
-
-function next(e, id) {
-  // Ripple
-  const r = document.createElement('div');
-  r.className = 'ripple';
-  r.style.left = e.clientX + 'px';
-  r.style.top = e.clientY + 'px';
-  r.style.width = r.style.height = '80px';
-  document.body.appendChild(r);
-  setTimeout(() => r.remove(), 900);
-
-  // Switch screen
+function goTo(id){
   document.getElementById(screens[current]).classList.remove('active');
   document.getElementById(screens[current]).style.display = 'none';
   current = screens.indexOf(id);
+  document.getElementById('displayName').textContent = chosen;
   const el = document.getElementById(id);
   el.style.display = 'flex';
   void el.offsetWidth;
   el.classList.add('active');
+  document.querySelectorAll('.dot-nav').forEach((d,i) => d.classList.toggle('active', i === current));
+  launchConfetti();
+}
 
-  // Nav dots
-  document.querySelectorAll('.dot-nav').forEach((d,i) => {
-    d.classList.toggle('active', i === current);
-  });
+function launchConfetti(){
+  const colors = ['#7c3aed','#a78bfa','#c4b5fd','#8b5cf6','#ddd6fe','#6d28d9'];
+  for(let i=0;i<40;i++){
+    const d = document.createElement('div');
+    d.className = 'confetti-dot';
+    const size = Math.random()*8+4;
+    d.style.cssText = `width:${size}px;height:${size}px;background:${colors[Math.floor(Math.random()*colors.length)]};left:${Math.random()*100}%;--t:${(Math.random()*2+1).toFixed(1)}s;animation-delay:${(Math.random()*0.5).toFixed(2)}s`;
+    document.body.appendChild(d);
+    setTimeout(()=>d.remove(), 3500);
+  }
 }
 </script>
 </body>
